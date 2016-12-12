@@ -1,4 +1,4 @@
-package com.androidapp.classifiedjobs.halper;
+package com.androidapp.classifiedjobs.helper;
 
 import android.graphics.Typeface;
 import android.text.SpannableString;

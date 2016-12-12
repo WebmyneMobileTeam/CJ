@@ -9,6 +9,8 @@
     <string name="enter_your_password_en">Enter Your Password</string>
     <string name="enter_your_name_en">Enter Your Name</string>
     <string name="enter_your_email_en">Enter Your Email</string>
+    <string name="job_en">Job</string>
+    <string name="classified_job_en">Classified Job</string>
 
     <string name="choose_lang_am">ቋንቋ ይምረጡ</string>
     <string name="lang_txt_am">ቋንቋ</string>
@@ -18,4 +20,6 @@
     <string name="enter_your_password_am">የእርስዎ የይለፍ ቃል ያስገቡ</string>
     <string name="enter_your_name_am">የእርስዎ ስም ያስገቡ</string>
     <string name="enter_your_email_am">የእርስዎ ኢሜይል ያስገቡ</string>
+    <string name="job_am">ሥራ</string>
+    <string name="classified_job_am">የተመደቡ ሥራ</string>
 </resources>

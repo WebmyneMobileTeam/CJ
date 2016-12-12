@@ -1,40 +1,31 @@
 package com.androidapp.classifiedjobs.login.activity;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.androidapp.classifiedjobs.R;
 import com.androidapp.classifiedjobs.databinding.ActivityLoginBinding;
-import com.androidapp.classifiedjobs.halper.AdvancedSpannableString;
-import com.androidapp.classifiedjobs.halper.Constants;
-import com.androidapp.classifiedjobs.halper.Functions;
-import com.androidapp.classifiedjobs.halper.Prefs;
-import com.androidapp.classifiedjobs.login.fragment.LoginFragment;
-import com.androidapp.classifiedjobs.login.fragment.RegisterFragment;
+import com.androidapp.classifiedjobs.databinding.LoginBinding;
+import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
+import com.androidapp.classifiedjobs.helper.Constants;
+import com.androidapp.classifiedjobs.helper.Functions;
+import com.androidapp.classifiedjobs.helper.Prefs;
+import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding dataBind;
+    private LoginBinding dataBind;
+    //    private ActivityLoginBinding dataBind;
     private AdvancedSpannableString advancedSpannableString;
     private View.OnClickListener clickListener;
     private boolean login = true;
@@ -42,35 +33,49 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBind = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        dataBind = DataBindingUtil.setContentView(this, R.layout.login);
         //set 0 position every time when app start
         Prefs.with(LoginActivity.this).save(Constants.CP_LOGIN, 0);
+
+
+        setTypeface();
+
+
         init();
 
+        dataBind.segmented2.check(R.id.loginRB);
+        SegmentedGroup segmentedGroup = (SegmentedGroup) findViewById(R.id.segmented2);
+        segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.loginRB:
+                        login = true;
+                        init();
+                        break;
+                    case R.id.registerRB:
+                        login = false;
+                        init();
+                        break;
+                }
+            }
+        });
 
     }
 
+    private void setTypeface() {
+        dataBind.inputName.setTypeface(Functions.getTF(this));
+        dataBind.inputEmail.setTypeface(Functions.getTF(this));
+        dataBind.inputPhone.setTypeface(Functions.getTF(this));
+        dataBind.inputPassword.setTypeface(Functions.getTF(this));
+        dataBind.engBtn.setTypeface(Functions.getTF(this));
+        dataBind.amhBtn.setTypeface(Functions.getTF(this));
+        dataBind.loginBtn.setTypeface(Functions.getTF(this));
+        dataBind.loginRB.setTypeface(Functions.getTF(this));
+        dataBind.registerRB.setTypeface(Functions.getTF(this));
+    }
+
     private void init() {
-
-
-        dataBind.loginTab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login = true;
-                init();
-                dataBind.loginTab.setBackgroundResource(R.color.colorPrimary);
-                dataBind.registerTab.setBackgroundResource(R.color.colorAccent);
-            }
-        });
-        dataBind.registerTab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login = false;
-                init();
-                dataBind.loginTab.setBackgroundResource(R.color.colorAccent);
-                dataBind.registerTab.setBackgroundResource(R.color.colorPrimary);
-            }
-        });
 
         //set labels according to lang selection
         if (Prefs.with(LoginActivity.this).getBoolean(Constants.LANG, true)) {
@@ -78,6 +83,8 @@ public class LoginActivity extends AppCompatActivity {
             dataBind.inputEmail.setHint(getResources().getString(R.string.enter_your_email_en));
             dataBind.inputPhone.setHint(getResources().getString(R.string.enter_your_phone_en));
             dataBind.inputPassword.setHint(getResources().getString(R.string.enter_your_password_en));
+            ((RadioButton) findViewById(R.id.loginRB)).setText(R.string.login_en);
+            ((RadioButton) findViewById(R.id.registerRB)).setText(R.string.register_en);
             if (login) {
                 dataBind.inputName.setVisibility(View.GONE);
                 dataBind.inputEmail.setVisibility(View.GONE);
@@ -92,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
             dataBind.inputEmail.setHint(getResources().getString(R.string.enter_your_email_am));
             dataBind.inputPhone.setHint(getResources().getString(R.string.enter_your_phone_am));
             dataBind.inputPassword.setHint(getResources().getString(R.string.enter_your_password_am));
+            ((RadioButton) findViewById(R.id.loginRB)).setText(R.string.login_am);
+            ((RadioButton) findViewById(R.id.registerRB)).setText(R.string.register_am);
             if (login) {
                 dataBind.inputName.setVisibility(View.GONE);
                 dataBind.inputEmail.setVisibility(View.GONE);
@@ -137,13 +146,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validate()) {
+                    Functions.fireIntent(LoginActivity.this, JobListingActivity.class, true);
+                    finish();
                 }
             }
         });
+
     }
 
     private boolean validate() {
-        if(login){}
+        if (login) {
+
+        }
         return true;
     }
 

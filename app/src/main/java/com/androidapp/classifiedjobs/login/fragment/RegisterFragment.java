@@ -14,8 +14,8 @@ import android.widget.EditText;
 
 import com.androidapp.classifiedjobs.R;
 import com.androidapp.classifiedjobs.databinding.FragmentRegisterBinding;
-import com.androidapp.classifiedjobs.halper.Constants;
-import com.androidapp.classifiedjobs.halper.Prefs;
+import com.androidapp.classifiedjobs.helper.Constants;
+import com.androidapp.classifiedjobs.helper.Prefs;
 
 /**
  * Created by ishan on 09-12-2016.

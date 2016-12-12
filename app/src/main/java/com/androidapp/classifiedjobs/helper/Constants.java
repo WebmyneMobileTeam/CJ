@@ -1,4 +1,4 @@
-package com.androidapp.classifiedjobs.halper;
+package com.androidapp.classifiedjobs.helper;
 
 /**
  * Created by ishan on 09-12-2016.

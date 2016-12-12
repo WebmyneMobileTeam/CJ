@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
-import com.androidapp.classifiedjobs.halper.AdvancedSpannableString;
-import com.androidapp.classifiedjobs.halper.Functions;
+import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
+import com.androidapp.classifiedjobs.helper.Functions;
+import com.androidapp.classifiedjobs.login.activity.Login;
 import com.androidapp.classifiedjobs.login.activity.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -38,9 +39,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(i);
-
+                Functions.fireIntent(SplashActivity.this, Login.class,true);
                 // close this activity
                 finish();
             }

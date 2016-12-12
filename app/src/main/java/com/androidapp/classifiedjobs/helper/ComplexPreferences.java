@@ -1,4 +1,4 @@
-package com.androidapp.classifiedjobs.halper;
+package com.androidapp.classifiedjobs.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
