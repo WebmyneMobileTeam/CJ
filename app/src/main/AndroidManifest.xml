@@ -20,7 +20,7 @@
             android:name=".login.activity.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".joblisting.activity.JobListingActivity" />
-        <activity android:name=".login.activity.Login" />
+        <activity android:name=".login.activity.LoginActivityRevised" />
     </application>
 
 </manifest>

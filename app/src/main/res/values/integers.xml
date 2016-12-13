@@ -2,18 +2,6 @@
 <resources>
 
     <integer name="duration_animation">400</integer>
-    <integer name="max6">6</integer>
-    <integer name="max11">11</integer>
-    <integer name="max15">15</integer>
-    <integer name="max10">10</integer>
-    <integer name="mobileNumber">10</integer>
-    <integer name="opposite_advocate_name">50</integer>
-    <integer name="other_details">300</integer>
-    <integer name="max_message_characters">300</integer>
-    <integer name="max_name_characters">50</integer>
-
-    <integer name="full_name">50</integer>
-    <integer name="max50">50</integer>
-    <integer name="max3">3</integer>
-
+    <integer name="duration_animation2">100</integer>
+    <integer name="duration_animation3">100</integer>
 </resources>

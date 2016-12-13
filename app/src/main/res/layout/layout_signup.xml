@@ -10,50 +10,75 @@
         android:orientation="vertical"
         android:padding="48dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_user" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/enterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#FFF">
+            android:textColorHint="@color/colorPrimary"
+            android:theme="@style/EdiTextLabelBlack">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
+                android:id="@+id/input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:textColor="#FFFFFF" />
+                android:inputType="text"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/enterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textColorHint="#FFF">
+            android:textColorHint="@color/colorPrimary"
+            android:theme="@style/EdiTextLabelBlack">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
+                android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:textColor="#FFFFFF" />
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/enterPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textColorHint="#FFF">
+            android:textColorHint="@color/colorPrimary"
+            android:theme="@style/EdiTextLabelBlack">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
+                android:id="@+id/input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mobile Number"
-                android:textColor="#FFFFFF" />
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
         </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/enterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorPrimary"
+            android:theme="@style/EdiTextLabelBlack">
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/btnSignup"
@@ -62,7 +87,7 @@
             android:layout_marginTop="20dp"
             android:background="@null"
             android:text="Signup"
-            android:textColor="#FFF"
+            android:textColor="@color/colorPrimary"
             android:textSize="30sp" />
     </LinearLayout>
 </layout>

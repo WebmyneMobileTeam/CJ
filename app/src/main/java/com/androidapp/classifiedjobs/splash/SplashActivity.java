@@ -1,6 +1,5 @@
 package com.androidapp.classifiedjobs.splash;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +9,7 @@ import android.widget.TextView;
 import com.androidapp.classifiedjobs.R;
 import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
 import com.androidapp.classifiedjobs.helper.Functions;
-import com.androidapp.classifiedjobs.login.activity.Login;
-import com.androidapp.classifiedjobs.login.activity.LoginActivity;
+import com.androidapp.classifiedjobs.login.activity.LoginActivityRevised;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -39,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Functions.fireIntent(SplashActivity.this, Login.class,true);
+                Functions.fireIntent(SplashActivity.this, LoginActivityRevised.class,true);
                 // close this activity
                 finish();
             }

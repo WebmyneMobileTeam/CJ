@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.androidapp.classifiedjobs.R;
-import com.androidapp.classifiedjobs.databinding.ActivityLoginBinding;
-import com.androidapp.classifiedjobs.databinding.LoginBinding;
 import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
 import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Functions;
@@ -24,7 +22,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginBinding dataBind;
+//    private LoginActivityRevised dataBind;
     //    private ActivityLoginBinding dataBind;
     private AdvancedSpannableString advancedSpannableString;
     private View.OnClickListener clickListener;
@@ -33,37 +31,37 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBind = DataBindingUtil.setContentView(this, R.layout.login);
+        DataBindingUtil.setContentView(this, R.layout.activity_login);
         //set 0 position every time when app start
         Prefs.with(LoginActivity.this).save(Constants.CP_LOGIN, 0);
 
 
-        setTypeface();
+//        setTypeface();
 
 
-        init();
+//        init();
 
-        dataBind.segmented2.check(R.id.loginRB);
-        SegmentedGroup segmentedGroup = (SegmentedGroup) findViewById(R.id.segmented2);
-        segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i) {
-                    case R.id.loginRB:
-                        login = true;
-                        init();
-                        break;
-                    case R.id.registerRB:
-                        login = false;
-                        init();
-                        break;
-                }
-            }
-        });
+//        dataBind.segmented2.check(R.id.loginRB);
+//        SegmentedGroup segmentedGroup = (SegmentedGroup) findViewById(R.id.segmented2);
+//        segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                switch (i) {
+//                    case R.id.loginRB:
+//                        login = true;
+//                        init();
+//                        break;
+//                    case R.id.registerRB:
+//                        login = false;
+//                        init();
+//                        break;
+//                }
+//            }
+//        });
 
     }
 
-    private void setTypeface() {
+/*    private void setTypeface() {
         dataBind.inputName.setTypeface(Functions.getTF(this));
         dataBind.inputEmail.setTypeface(Functions.getTF(this));
         dataBind.inputPhone.setTypeface(Functions.getTF(this));
@@ -113,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        //set login title
+        //set activity_login_revised title
         initLoginTitle();
 
         //init Lang Button
@@ -177,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             advancedSpannableString = new AdvancedSpannableString(getString(R.string.choose_lang_en));
             advancedSpannableString.setBold(getString(R.string.lang_txt_en));
 
-            //set login title
+            //set activity_login_revised title
             dataBind.loginTitle.setText(advancedSpannableString);
             //set type face
             dataBind.loginTitle.setTypeface(Functions.getTF(this));
@@ -186,11 +184,11 @@ public class LoginActivity extends AppCompatActivity {
             advancedSpannableString = new AdvancedSpannableString(getString(R.string.choose_lang_am));
             advancedSpannableString.setBold(getString(R.string.lang_txt_am));
 
-            //set login title
+            //set activity_login_revised title
             dataBind.loginTitle.setText(advancedSpannableString);
         }
     }
-/*
+*//*
     private void initViewPager() {
         //set view pager....
         setupViewPager();
@@ -270,7 +268,7 @@ public class LoginActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }*/
+    }*//*
 
     private void clickListener() {
         dataBind.inputPassword.setOnTouchListener(new View.OnTouchListener() {
@@ -299,5 +297,5 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
+    }*/
 }

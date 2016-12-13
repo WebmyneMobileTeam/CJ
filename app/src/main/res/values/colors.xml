@@ -18,6 +18,6 @@
 
 
     <color name="colorPrimaryTrans">#a00077B5</color>
-    <color name="colorAccentTrans">#a0009688</color>
+    <color name="colorAccentTrans">#a0ffffff</color>
     <color name="colorBlackTrans">#a0000000</color>
 </resources>
