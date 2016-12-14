@@ -8,5 +8,5 @@ public class Constants {
     //current page of activity_login_revised or register
     public static final String CP_LOGIN = "cp_login";
     //for lang selection
-    public static String LANG = "lang";
+    public static String IS_LANG_ENG = "lang";
 }

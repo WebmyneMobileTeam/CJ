@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_category_selection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.androidapp.classifiedjobs.category.CategorySelectionActivity">
+
+    <ImageView
+        android:tint="#eeffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_people" />
+
+    <TextView
+        android:id="@+id/txtChooseCategories"
+        android:textSize="18sp"
+        android:text="@string/choose_categories_en"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.androidapp.classifiedjobs.category.TagLayout
+        android:layout_margin="16dp"
+        android:id="@+id/flowlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+    </com.androidapp.classifiedjobs.category.TagLayout>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:textSize="22sp"
+        android:background="@android:color/transparent"
+        android:onClick="onclickNext"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Next_En"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

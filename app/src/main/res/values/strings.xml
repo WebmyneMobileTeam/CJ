@@ -1,16 +1,20 @@
 <resources>
     <string name="app_name">Classified Jobs</string>
 
-    <string name="choose_lang_en">CHOOSE LANGUAGE</string>
+    <string name="choose_lang_en">Choose Language</string>
     <string name="lang_txt_en">LANGUAGE</string>
     <string name="login_en">LOGIN</string>
     <string name="register_en">REGISTER</string>
-    <string name="enter_your_phone_en">Enter Your Phone</string>
-    <string name="enter_your_password_en">Enter Your Password</string>
-    <string name="enter_your_name_en">Enter Your Name</string>
-    <string name="enter_your_email_en">Enter Your Email</string>
+    <string name="enter_your_phone_en">Phone</string>
+    <string name="enter_your_password_en">Password</string>
+    <string name="enter_your_name_en">Name</string>
+    <string name="enter_your_email_en">Email</string>
     <string name="job_en">Job</string>
     <string name="classified_job_en">Classified Job</string>
+    <string name="Next_En">Next</string>
+    <string name="choose_categories_en">Choose Categories</string>
+    <string name="lorem_en">Contrary to popular belief, Lorem Ipsum is not simply random text</string>
+
 
     <string name="choose_lang_am">ቋንቋ ይምረጡ</string>
     <string name="lang_txt_am">ቋንቋ</string>
@@ -22,4 +26,9 @@
     <string name="enter_your_email_am">የእርስዎ ኢሜይል ያስገቡ</string>
     <string name="job_am">ሥራ</string>
     <string name="classified_job_am">የተመደቡ ሥራ</string>
+    <string name="Next_am">ቀጣይ</string>
+    <string name="choose_categories_am">ምድቦች ይምረጡ</string>
+    <string name="lorem_am">ብዙዎች ካላቸው እምነት በተቃራኒ, lorem ipsum እንዲያው የዘፈቀደ ጽሑፍ አይደለም</string>
+
+
 </resources>

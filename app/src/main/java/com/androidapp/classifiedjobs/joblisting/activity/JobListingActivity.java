@@ -52,7 +52,7 @@ public class JobListingActivity extends AppCompatActivity {
             TabLayout.Tab tab1 = dataBind.tabLayout.getTabAt(0);
             TabLayout.Tab tab2 = dataBind.tabLayout.getTabAt(1);
             if (tab1 != null && tab2 != null) {
-                if (Prefs.with(JobListingActivity.this).getBoolean(Constants.LANG, true)) {
+                if (Prefs.with(JobListingActivity.this).getBoolean(Constants.IS_LANG_ENG, true)) {
                     tab1.setText(R.string.job_en);
                     tab2.setText(R.string.classified_job_en);
                 } else {

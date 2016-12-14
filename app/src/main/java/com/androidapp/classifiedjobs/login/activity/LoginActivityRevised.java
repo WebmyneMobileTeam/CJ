@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
-import com.androidapp.classifiedjobs.databinding.ActivityLoginBinding;
+import com.androidapp.classifiedjobs.category.CategorySelectionActivity;
 import com.androidapp.classifiedjobs.databinding.ActivityLoginRevisedBinding;
 import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Functions;
@@ -31,7 +32,7 @@ public class LoginActivityRevised extends AppCompatActivity {
         dataBind = DataBindingUtil.setContentView(this, R.layout.activity_login_revised);
 
 
-        if (Prefs.with(this).getBoolean(Constants.LANG, true)) {
+        if (Prefs.with(this).getBoolean(Constants.IS_LANG_ENG, true)) {
             dataBind.engRB.setChecked(true);
             dataBind.amhRB.setChecked(false);
         } else {
@@ -53,29 +54,36 @@ public class LoginActivityRevised extends AppCompatActivity {
 
     }
 
-
     private void init() {
+
+        if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true)) {
+            dataBind.langSegment.check(R.id.engRB);
+        } else {
+            dataBind.langSegment.check(R.id.amhRB);
+        }
 
         dataBind.langSegment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (dataBind.engRB.isChecked()) {
-                    Prefs.with(LoginActivityRevised.this).save(Constants.LANG, true);
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LANG_ENG, true);
                 } else {
-                    Prefs.with(LoginActivityRevised.this).save(Constants.LANG, false);
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LANG_ENG, false);
                 }
                 if (dataBind.amhRB.isChecked()) {
-                    Prefs.with(LoginActivityRevised.this).save(Constants.LANG, false);
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LANG_ENG, false);
                 } else {
-                    Prefs.with(LoginActivityRevised.this).save(Constants.LANG, true);
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LANG_ENG, true);
                 }
                 init();
             }
         });
 
 
+        TextView txtChooseLanguage = (TextView) findViewById(R.id.txtChooseLanguage);
+
         //set labels according to lang selection
-        if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.LANG, true)) {
+        if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true)) {
             dataBind.tvSigninInvoker.setText(R.string.login_en);
             dataBind.tvSignupInvoker.setText(R.string.register_en);
 
@@ -89,6 +97,10 @@ public class LoginActivityRevised extends AppCompatActivity {
 
             dataBind.llSigninContent.enterPhoneET.setHint(getResources().getString(R.string.enter_your_phone_en));
             dataBind.llSigninContent.enterPasswordET.setHint(getResources().getString(R.string.enter_your_password_en));
+
+
+            txtChooseLanguage.setText(R.string.choose_lang_en);
+
 
         } else {
             dataBind.tvSigninInvoker.setText(R.string.login_am);
@@ -104,6 +116,8 @@ public class LoginActivityRevised extends AppCompatActivity {
 
             dataBind.llSigninContent.enterPhoneET.setHint(getResources().getString(R.string.enter_your_phone_am));
             dataBind.llSigninContent.enterPasswordET.setHint(getResources().getString(R.string.enter_your_password_am));
+
+            txtChooseLanguage.setText(R.string.choose_lang_am);
         }
 
         //open register page
@@ -126,7 +140,7 @@ public class LoginActivityRevised extends AppCompatActivity {
         dataBind.llSignupContent.btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Functions.fireIntent(LoginActivityRevised.this, JobListingActivity.class, true);
+                Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
             }
         });
 
@@ -160,11 +174,11 @@ public class LoginActivityRevised extends AppCompatActivity {
     }
 
     private void showSignupForm() {
+
         PercentRelativeLayout.LayoutParams paramsLogin = (PercentRelativeLayout.LayoutParams) dataBind.llSignin.getLayoutParams();
         PercentLayoutHelper.PercentLayoutInfo infoLogin = paramsLogin.getPercentLayoutInfo();
         infoLogin.widthPercent = 0.15f;
         dataBind.llSignin.requestLayout();
-
 
         PercentRelativeLayout.LayoutParams paramsSignup = (PercentRelativeLayout.LayoutParams) dataBind.llSignup.getLayoutParams();
         PercentLayoutHelper.PercentLayoutInfo infoSignup = paramsSignup.getPercentLayoutInfo();
@@ -182,6 +196,7 @@ public class LoginActivityRevised extends AppCompatActivity {
     }
 
     private void showSigninForm() {
+
         PercentRelativeLayout.LayoutParams paramsLogin = (PercentRelativeLayout.LayoutParams) dataBind.llSignin.getLayoutParams();
         PercentLayoutHelper.PercentLayoutInfo infoLogin = paramsLogin.getPercentLayoutInfo();
         infoLogin.widthPercent = 0.85f;
@@ -192,6 +207,7 @@ public class LoginActivityRevised extends AppCompatActivity {
         PercentLayoutHelper.PercentLayoutInfo infoSignup = paramsSignup.getPercentLayoutInfo();
         infoSignup.widthPercent = 0.15f;
         dataBind.llSignup.requestLayout();
+
 
         Animation translate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_left_to_right);
         dataBind.llSignin.startAnimation(translate);
