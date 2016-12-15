@@ -3,22 +3,12 @@ package com.androidapp.classifiedjobs.login.activity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.androidapp.classifiedjobs.R;
 import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
 import com.androidapp.classifiedjobs.helper.Constants;
-import com.androidapp.classifiedjobs.helper.Functions;
 import com.androidapp.classifiedjobs.helper.Prefs;
-import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
-
-import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class LoginActivity extends AppCompatActivity {
 

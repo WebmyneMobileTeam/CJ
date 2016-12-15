@@ -1,23 +1,48 @@
 package com.androidapp.classifiedjobs.login.activity;
 
+import android.app.AlertDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.androidapp.classifiedjobs.CJMyApplication;
 import com.androidapp.classifiedjobs.R;
+import com.androidapp.classifiedjobs.api.AppApi;
 import com.androidapp.classifiedjobs.category.CategorySelectionActivity;
+import com.androidapp.classifiedjobs.helper.RetrofitErrorHelper;
+import com.androidapp.classifiedjobs.login.model.CategoryList;
 import com.androidapp.classifiedjobs.databinding.ActivityLoginRevisedBinding;
+import com.androidapp.classifiedjobs.helper.ComplexPreferences;
 import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Functions;
 import com.androidapp.classifiedjobs.helper.Prefs;
 import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
+import com.androidapp.classifiedjobs.login.model.LoginReq;
+import com.androidapp.classifiedjobs.login.model.LoginRes;
+import com.androidapp.classifiedjobs.login.model.RUserDetail;
+import com.androidapp.classifiedjobs.login.model.RegistrationReq;
+import com.androidapp.classifiedjobs.login.model.RegistrationRes;
+import com.androidapp.classifiedjobs.login.model.UserData;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.jaredrummler.android.device.DeviceName;
+
+import dmax.dialog.SpotsDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ishan on 12-12-2016.
@@ -25,6 +50,9 @@ import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
 
 public class LoginActivityRevised extends AppCompatActivity {
     private ActivityLoginRevisedBinding dataBind;
+    private long mLastClickTime;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +83,10 @@ public class LoginActivityRevised extends AppCompatActivity {
     }
 
     private void init() {
+
+        Functions.logError(LoginActivityRevised.this, FirebaseInstanceId.getInstance().getToken());
+
+        dialog = new SpotsDialog(this, R.style.Custom);
 
         if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true)) {
             dataBind.langSegment.check(R.id.engRB);
@@ -140,14 +172,263 @@ public class LoginActivityRevised extends AppCompatActivity {
         dataBind.llSignupContent.btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1500) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                if (validationRegistration(view)) {
+                    registration();
+                }
             }
         });
 
         dataBind.llSigninContent.btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Functions.fireIntent(LoginActivityRevised.this, JobListingActivity.class, true);
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1500) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                if (validationLogin(view)) {
+                    login();
+                }
+            }
+        });
+
+        //hide or show fun on password
+        listenerOnPassword();
+    }
+
+    //this method for hide or show fun on password
+    private void listenerOnPassword() {
+        dataBind.llSignupContent.inputPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                EditText editText = (EditText) view;
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (motionEvent.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // hide password
+                        dataBind.llSignupContent.inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        return true;
+                    }
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // show password
+                        dataBind.llSignupContent.inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        dataBind.llSigninContent.password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                EditText editText = (EditText) view;
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (motionEvent.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // hide password
+                        dataBind.llSigninContent.password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        return true;
+                    }
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // show password
+                        dataBind.llSigninContent.password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        });
+    }
+
+    //this method for validate login field
+    private boolean validationLogin(View view) {
+        if (!Functions.isInternetConnected(LoginActivityRevised.this)) {
+            Functions.showSnack(view, getString(R.string.internet_error_en));
+            return false;
+        } else if (dataBind.llSigninContent.phone.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            return false;
+        } else if (dataBind.llSigninContent.phone.getText().toString().trim().length() != 10) {
+            Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            return false;
+        } else if (dataBind.llSigninContent.password.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_password_en));
+            return false;
+        }
+
+        return true;
+    }
+
+    //this method for validate registration field
+    private boolean validationRegistration(View view) {
+        if (!Functions.isInternetConnected(LoginActivityRevised.this)) {
+            Functions.showSnack(view, getString(R.string.internet_error_en));
+            return false;
+        } else if (dataBind.llSignupContent.inputName.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_name_en));
+            return false;
+        } else if (dataBind.llSignupContent.inputEmail.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_email_id_en));
+            return false;
+        } else if (!dataBind.llSignupContent.inputEmail.getText().toString().trim().matches(emailPattern)) {
+            Functions.showSnack(view, getString(R.string.enter_valid_email_en));
+            return false;
+        } else if (dataBind.llSignupContent.inputPhone.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            return false;
+        } else if (dataBind.llSignupContent.inputPhone.getText().toString().trim().length() != 10) {
+            Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            return false;
+        } else if (dataBind.llSignupContent.inputPassword.getText().toString().trim().equals("")) {
+            Functions.showSnack(view, getString(R.string.enter_password_en));
+            return false;
+        }
+
+        return true;
+    }
+
+    //in this method registration request obj will create and send to api
+    private void registration() {
+        String fcmToken = Prefs.with(this).getString(Constants.FCM_TOKEN, null);
+
+        RegistrationReq registrationReq = new RegistrationReq();
+        registrationReq.setDeviceID(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+        registrationReq.setDeviceModel(DeviceName.getDeviceName());
+        if (fcmToken != null && !fcmToken.trim().equals("")) {
+            registrationReq.setDeviceToken(fcmToken);
+        } else {
+            registrationReq.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+        }
+        registrationReq.setDeviceType("Android");
+        registrationReq.setName(dataBind.llSignupContent.inputName.getText().toString().trim());
+        registrationReq.setEmail(dataBind.llSignupContent.inputEmail.getText().toString().trim());
+        registrationReq.setMobileNo(dataBind.llSignupContent.inputPhone.getText().toString().trim());
+        registrationReq.setPassword(dataBind.llSignupContent.inputPassword.getText().toString().trim());
+        if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true)) {
+            registrationReq.setLanguageType("E");
+        } else {
+            registrationReq.setLanguageType("A");
+        }
+
+        if (registrationReq != null) {
+            callApiForRegistration(registrationReq);
+        }
+    }
+
+    //in this method registration api will call
+    private void callApiForRegistration(RegistrationReq registrationReq) {
+        if (dialog != null) {
+            dialog.show();
+            dialog.setTitle(getString(R.string.authentication_en));
+        }
+        Functions.logError(this, CJMyApplication.getGson().toJson(registrationReq).toString());
+        AppApi appApi = CJMyApplication.getRetrofit().create(AppApi.class);
+        Call<RegistrationRes> call = appApi.registrationCall(registrationReq);
+        call.enqueue(new Callback<RegistrationRes>() {
+            @Override
+            public void onResponse(Call<RegistrationRes> call, Response<RegistrationRes> response) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                if (response.body() != null && response.body().getResponseData() != null &&
+                        response.body().getResponseData().getData() != null &&
+                        response.body().getResponseData().getData().size() > 0 &&
+                        response.body().getResponseData().getData().get(0).getUserDetail() != null) {
+                    Functions.logError(LoginActivityRevised.this, response.code() + " " + CJMyApplication.getGson().toJson(response.body()).toString());
+                    UserData.insertUserData(response.body().getResponseData().getData().get(0).getUserDetail());
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(LoginActivityRevised.this, Constants.USER_DATA, MODE_PRIVATE);
+                    RUserDetail userData = response.body().getResponseData().getData().get(0).getUserDetail();
+                    complexPreferences.putObject("user", userData);
+                    complexPreferences.commit();
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LOGIN, true);
+                    Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
+
+                    if (response.body().getResponseData().getData().get(0).getCategoryList() != null &&
+                            response.body().getResponseData().getData().get(0).getCategoryList().size() > 0) {
+                        for (int i = 0; i < response.body().getResponseData().getData().get(0).getCategoryList().size(); i++) {
+                            CategoryList.insertCategoryList(response.body().getResponseData().getData().get(0).getCategoryList().get(i));
+                        }
+                    }
+
+                } else {
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegistrationRes> call, Throwable t) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                Functions.logError(LoginActivityRevised.this,t.getMessage());
+                Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+            }
+        });
+    }
+
+    //in this method login request obj will create and send to api for validate
+    private void login() {
+        LoginReq loginReq = new LoginReq();
+        loginReq.setMobileNo(dataBind.llSigninContent.phone.getText().toString().trim());
+        loginReq.setPassword(dataBind.llSigninContent.password.getText().toString().trim());
+        if (loginReq != null) {
+            callApiForLogin(loginReq);
+        }
+    }
+
+    //in this method login api will call
+    private void callApiForLogin(LoginReq loginReq) {
+        if (dialog != null) {
+            dialog.show();
+            dialog.setTitle(getString(R.string.authentication_en));
+        }
+        Functions.logError(this, CJMyApplication.getGson().toJson(loginReq).toString());
+        AppApi appApi = CJMyApplication.getRetrofit().create(AppApi.class);
+        appApi.loginCall(loginReq).enqueue(new Callback<LoginRes>() {
+            @Override
+            public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                if (response.body() != null && response.body().getResponseData() != null &&
+                        response.body().getResponseData().getData() != null &&
+                        response.body().getResponseData().getData().size() > 0) {
+                    Functions.logError(LoginActivityRevised.this, response.code() + " " + CJMyApplication.getGson().toJson(response.body()).toString());
+                    UserData.insertUserData(response.body().getResponseData().getData().get(0));
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(LoginActivityRevised.this, Constants.USER_DATA, MODE_PRIVATE);
+                    RUserDetail userData = response.body().getResponseData().getData().get(0);
+                    complexPreferences.putObject("user", userData);
+                    complexPreferences.commit();
+                    Prefs.with(LoginActivityRevised.this).save(Constants.IS_LOGIN, true);
+                    Functions.fireIntent(LoginActivityRevised.this, JobListingActivity.class, true);
+                } else {
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.try_to_register_en));
+                    showSignupForm();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginRes> call, Throwable t) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
             }
         });
     }

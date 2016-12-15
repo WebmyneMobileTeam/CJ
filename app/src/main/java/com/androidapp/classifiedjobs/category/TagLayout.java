@@ -3,6 +3,7 @@ package com.androidapp.classifiedjobs.category;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
+import com.androidapp.classifiedjobs.helper.ComplexPreferences;
+import com.androidapp.classifiedjobs.login.model.CategoryList;
+import com.androidapp.classifiedjobs.login.model.RCategoryList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dhruvil on 09-12-2016.
@@ -19,7 +24,7 @@ import java.util.ArrayList;
 
 public class TagLayout extends FlowLayout {
 
-    private ArrayList<Category> categories;
+    private List<RCategoryList> categories;
 
     public TagLayout(Context context) {
         super(context);
@@ -29,7 +34,7 @@ public class TagLayout extends FlowLayout {
         super(context, attrs);
     }
 
-    public void diaplyValues(ArrayList<Category> categories) {
+    public void diaplyValues(List<RCategoryList> categories) {
         this.categories = categories;
         displayCategories();
     }
@@ -39,14 +44,14 @@ public class TagLayout extends FlowLayout {
         invalidate();
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = 4;
-        params.bottomMargin = 4;
+        params.topMargin = 0;
+        params.bottomMargin = 0;
         for (int i = 0; i < categories.size(); i++) {
 
             TextView txt = new TextView(getContext());
             txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
             txt.setBackgroundResource(R.drawable.layout_bg);
-            txt.setText(categories.get(i).name);
+            txt.setText(categories.get(i).CategoryName());
             txt.setPadding(30, 10, 30, 10);
             txt.setTextColor(Color.WHITE);
             txt.setOnClickListener(catClick);
@@ -60,32 +65,32 @@ public class TagLayout extends FlowLayout {
         public void onClick(View view) {
 
             int clickedPos = indexOfChild(view);
-            boolean isSelected = categories.get(clickedPos).isSelected;
-            TextView txt = (TextView)view;
+            boolean isSelected = categories.get(clickedPos).isSelected();
+            TextView txt = (TextView) view;
 
-            if(isSelected == false){
+            if (isSelected == false) {
                 txt.setBackgroundResource(R.drawable.layout_bg_selected);
-            }else{
+            } else {
                 txt.setBackgroundResource(R.drawable.layout_bg);
             }
             txt.setPadding(30, 10, 30, 10);
-            categories.get(clickedPos).isSelected = !categories.get(clickedPos).isSelected;
+            categories.get(clickedPos).setSelected(!categories.get(clickedPos).isSelected());
+            CategoryList.updateCategoryList(categories.get(clickedPos));
         }
     };
 
-    public ArrayList<Category> getSelectedValues(){
-        ArrayList<Category> values = new ArrayList<>();
+    public ArrayList<RCategoryList> getSelectedValues() {
+        ArrayList<RCategoryList> values = new ArrayList<>();
 
-        for (Category category : categories) {
-            if(category.isSelected == true){
+        for (RCategoryList category : categories) {
+            if (category.isSelected() == true) {
                 values.add(category);
             }
-
         }
+
         return values;
 
     }
-
 
 
 }

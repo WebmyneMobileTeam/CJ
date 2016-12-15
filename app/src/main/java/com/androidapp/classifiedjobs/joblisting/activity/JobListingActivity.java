@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,7 +16,6 @@ import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Prefs;
 import com.androidapp.classifiedjobs.joblisting.fragment.ClassifeidJobsFragment;
 import com.androidapp.classifiedjobs.joblisting.fragment.JobsFragment;
-import com.androidapp.classifiedjobs.login.activity.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,14 +61,13 @@ public class JobListingActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void setupViewPager() {
         // init adapter for viewPager and assign fragment
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new JobsFragment(), getString(R.string.login_en));
         adapter.addFragment(new ClassifeidJobsFragment(), getString(R.string.register_en));
         dataBind.viewPager.setAdapter(adapter);
+        dataBind.viewPager.setOffscreenPageLimit(0);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

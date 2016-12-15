@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "303652675514",
+    "firebase_url": "https://classifiedjob-32336.firebaseio.com",
+    "project_id": "classifiedjob-32336",
+    "storage_bucket": "classifiedjob-32336.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303652675514:android:131a7fd1d1b19e23",
+        "android_client_info": {
+          "package_name": "com.androidapp.classifiedjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303652675514-21sdgbqj2vqlbonlo4flv1l3875jeodk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_oIo2MKbTuysv6QomtOXTDo72Opz1bds"
+        },
+        {
+          "current_key": "AIzaSyDapPsHTLGifnKfv3QUEaEaSpRwvdcvde8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303652675514-21sdgbqj2vqlbonlo4flv1l3875jeodk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

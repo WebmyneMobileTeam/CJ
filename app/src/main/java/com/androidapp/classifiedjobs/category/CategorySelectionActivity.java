@@ -8,17 +8,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
+import com.androidapp.classifiedjobs.login.model.CategoryList;
 import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Functions;
 import com.androidapp.classifiedjobs.helper.Prefs;
 import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
+import com.androidapp.classifiedjobs.login.model.RCategoryList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategorySelectionActivity extends AppCompatActivity {
     private TagLayout tagLayout;
-    private String[] values = {"Information Technology", "Electrical Eng", "EC", "ME", "Civil", "FT"
-            , "Cloud Technology", "Fitter", "ITI", "Teacher"};
+//    private String[] values = {"Information Technology", "Electrical Eng", "EC", "ME", "Civil", "FT"
+//            , "Cloud Technology", "Fitter", "ITI", "Teacher"};
 
     private Button btnNext;
     private TextView txtChooseCategories;
@@ -36,16 +39,18 @@ public class CategorySelectionActivity extends AppCompatActivity {
     private void init() {
 
         tagLayout = (TagLayout) findViewById(R.id.flowlayout);
-        ArrayList<Category> categories = new ArrayList<>();
-        for (int i = 0; i < values.length; i++) {
-            Category category = new Category();
-            category.id = i;
-            category.name = values[i];
-            category.isSelected = false;
-            categories.add(category);
+        List<CategoryList> categories = CategoryList.getAllCategoryList();
+        Log.e("size",categories.size()+"");
+        List<RCategoryList> rCategories = new ArrayList<>();
+
+        for (int i = 0; i < categories.size(); i++) {
+            RCategoryList rCategoryList = new RCategoryList();
+            rCategoryList.setCategoryID(categories.get(i).CategoryID());
+            rCategoryList.setCategoryName(categories.get(i).CategoryName());
+            rCategories.add(rCategoryList);
         }
 
-        tagLayout.diaplyValues(categories);
+        tagLayout.diaplyValues(rCategories);
 
         btnNext = (Button) findViewById(R.id.btnNext);
         txtChooseCategories = (TextView) findViewById(R.id.txtChooseCategories);
@@ -62,10 +67,10 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
     public void onclickNext(View view) {
 
-        ArrayList<Category> selectedValues = tagLayout.getSelectedValues();
+        ArrayList<RCategoryList> selectedValues = tagLayout.getSelectedValues();
 
-        for (Category selectedValue : selectedValues) {
-            Log.e("Selected Value", selectedValue.name);
+        for (RCategoryList selectedValue : selectedValues) {
+            Log.e("Selected Value", selectedValue.CategoryName());
 
         }
 

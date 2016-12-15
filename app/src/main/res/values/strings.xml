@@ -30,5 +30,33 @@
     <string name="choose_categories_am">ምድቦች ይምረጡ</string>
     <string name="lorem_am">ብዙዎች ካላቸው እምነት በተቃራኒ, lorem ipsum እንዲያው የዘፈቀደ ጽሑፍ አይደለም</string>
 
+    <string name="no_record">No Record Found</string>
+
+    <string name="wrong_response_en">Some thing went wrong Please try again later.</string>
+    <string name="authentication_en">Authentication...</string>
+    <string name="internet_error_en">Please Check your Internet Connection.</string>
+    <string name="enter_name_en">Please Enter your Name</string>
+    <string name="enter_email_id_en">Please Enter your Email ID.</string>
+    <string name="enter_valid_email_en">Please Enter valid Email ID.</string>
+    <string name="enter_phone_no_en">Please Enter your Phone No.</string>
+    <string name="enter_password_en">Please Enter your Password.</string>
+    <string name="enter_valid_phone_en">Please Enter Valid Phone No.</string>
+    <string name="try_to_register_en">No Data Found Please try to Register.</string>
+    <string name="time_out_en">Time out please contact to admin.</string>
+    <string name="server_error">Server error please contact to admin.</string>
+
+    <string name="wrong_response_am">አንዳንድ ነገር ስህተት እባክዎ ቆይተው እንደገና ይሞክሩ ወጣ.</string>
+    <string name="authentication_am">ማረጋገጫ ...</string>
+    <string name="internet_error_am">የበይነመረብ ግንኙነት ይፈትሹ.</string>
+    <string name="enter_name_am">እባክዎ ስምዎን ያስገቡ</string>
+    <string name="enter_email_id_am">የእርስዎ ኢሜይል መታወቂያ ያስገቡ.</string>
+    <string name="enter_valid_email_am">ልክ የሆነ የኢሜይል መታወቂያ ያስገቡ.</string>
+    <string name="enter_phone_no_am">የእርስዎን ስልክ ቁጥር ያስገቡ እባክዎ</string>
+    <string name="enter_password_am">እባክዎ የይለፍ ቃልዎን ያስገቡ.</string>
+    <string name="enter_valid_phone_am">የሚሰራ ስልክ ቁጥር ያስገቡ እባክዎ</string>
+    <string name="try_to_register_am">ምንም ውሂብ ማስመዝገብ ይሞክሩ ተገኝቷል.</string>
+    <string name="time_out_am">ጊዜ አስተዳዳሪ ወደ ያነጋግሩ.</string>
+    <string name="server_error_am">የአገልጋይ ስህተት አስተዳዳሪ ወደ ያነጋግሩ.</string>
+
 
 </resources>

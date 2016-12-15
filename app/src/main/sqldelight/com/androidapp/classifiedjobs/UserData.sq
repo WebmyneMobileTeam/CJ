@@ -1,0 +1,17 @@
+CREATE TABLE UserData (
+	id	INTEGER,
+	CreatedDate	TEXT,
+	CreatedDateInt	INTEGER,
+	DeviceID	TEXT,
+	DeviceModel	TEXT,
+	DeviceToken	TEXT,
+	DeviceType	TEXT,
+	Email	TEXT,
+	IsAdmin	INTEGER AS Boolean NOT NULL DEFAULT ((0)),
+	IsLoggedIn	INTEGER AS Boolean NOT NULL DEFAULT ((0)),
+	LanguageType	TEXT,
+	MobileNo	TEXT,
+	Password	TEXT,
+	UserID	INTEGER,
+	UserName	TEXT
+);

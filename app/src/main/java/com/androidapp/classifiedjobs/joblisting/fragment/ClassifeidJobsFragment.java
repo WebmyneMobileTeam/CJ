@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,15 @@ public class ClassifeidJobsFragment extends Fragment {
     public ClassifeidJobsFragment() {
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if(dataBind==null)
+            Log.e("2", "2");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,19 +47,20 @@ public class ClassifeidJobsFragment extends Fragment {
         init();
         return dataBind.getRoot();
     }
+
     private void init() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         dataBind.cjobsList.setLayoutManager(mLayoutManager);
         dataBind.cjobsList.setItemAnimator(new DefaultItemAnimator());
         jobsList = new ArrayList<>();
-        jobsList.add(new Job("image", "TITLE 1",R.drawable.img8));
-        jobsList.add(new Job("image", "TITLE 2",R.drawable.img7));
-        jobsList.add(new Job("image", "TITLE 3",R.drawable.img5));
-        jobsList.add(new Job("image", "TITLE 4",R.drawable.img3));
-        jobsList.add(new Job("image", "TITLE 5",R.drawable.img4));
-        jobsList.add(new Job("image", "TITLE 6",R.drawable.img2));
-        jobsList.add(new Job("image", "TITLE 7",R.drawable.img1));
-        jobsList.add(new Job("image", "TITLE 8",R.drawable.img6));
+        jobsList.add(new Job("image", "TITLE 1", R.drawable.img8));
+        jobsList.add(new Job("image", "TITLE 2", R.drawable.img7));
+        jobsList.add(new Job("image", "TITLE 3", R.drawable.img5));
+        jobsList.add(new Job("image", "TITLE 4", R.drawable.img3));
+        jobsList.add(new Job("image", "TITLE 5", R.drawable.img4));
+        jobsList.add(new Job("image", "TITLE 6", R.drawable.img2));
+        jobsList.add(new Job("image", "TITLE 7", R.drawable.img1));
+        jobsList.add(new Job("image", "TITLE 8", R.drawable.img6));
         mAdapter = new JobListAdapter(getActivity(), jobsList);
         dataBind.cjobsList.setAdapter(mAdapter);
     }
