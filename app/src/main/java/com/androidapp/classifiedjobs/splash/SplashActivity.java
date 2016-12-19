@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
+import com.androidapp.classifiedjobs.category.CategorySelectionActivity;
 import com.androidapp.classifiedjobs.helper.AdvancedSpannableString;
+import com.androidapp.classifiedjobs.helper.Constants;
 import com.androidapp.classifiedjobs.helper.Functions;
+import com.androidapp.classifiedjobs.helper.Prefs;
+import com.androidapp.classifiedjobs.joblisting.activity.JobListingActivity;
 import com.androidapp.classifiedjobs.login.activity.LoginActivityRevised;
 
 public class SplashActivity extends AppCompatActivity {
@@ -37,7 +41,15 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Functions.fireIntent(SplashActivity.this, LoginActivityRevised.class,true);
+                if (Prefs.with(SplashActivity.this).getBoolean(Constants.IS_LOGIN, false)) {
+                    if (Prefs.with(SplashActivity.this).getBoolean(Constants.CATEGORY_SELECTED, false)) {
+                        Functions.fireIntent(SplashActivity.this, JobListingActivity.class, true);
+                    } else {
+                        Functions.fireIntent(SplashActivity.this, CategorySelectionActivity.class, true);
+                    }
+                } else {
+                    Functions.fireIntent(SplashActivity.this, LoginActivityRevised.class, true);
+                }
                 // close this activity
                 finish();
             }

@@ -1,0 +1,15 @@
+CREATE TABLE Category (
+	CategoryID	INTEGER,
+	EngCategoryName	TEXT,
+	AmhCategoryName	TEXT,
+	isSelected	INTEGER AS Boolean NOT NULL DEFAULT ((0))
+);
+
+select_all_data:
+SELECT * FROM Category;
+
+select_data_by_id:
+SELECT * FROM Category WHERE CategoryID = ?;
+
+select_data_by_selected:
+SELECT * FROM Category WHERE isSelected = ?;

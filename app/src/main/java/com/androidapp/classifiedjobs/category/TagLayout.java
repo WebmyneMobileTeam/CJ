@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
 import com.androidapp.classifiedjobs.helper.ComplexPreferences;
+import com.androidapp.classifiedjobs.helper.Constants;
+import com.androidapp.classifiedjobs.helper.Prefs;
 import com.androidapp.classifiedjobs.login.model.CategoryList;
 import com.androidapp.classifiedjobs.login.model.RCategoryList;
 
@@ -23,15 +25,18 @@ import java.util.List;
  */
 
 public class TagLayout extends FlowLayout {
+    private Context context;
 
     private List<RCategoryList> categories;
 
     public TagLayout(Context context) {
         super(context);
+        this.context = context;
     }
 
     public TagLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
     }
 
     public void diaplyValues(List<RCategoryList> categories) {
@@ -51,7 +56,11 @@ public class TagLayout extends FlowLayout {
             TextView txt = new TextView(getContext());
             txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
             txt.setBackgroundResource(R.drawable.layout_bg);
-            txt.setText(categories.get(i).CategoryName());
+            if (Prefs.with(context).getBoolean(Constants.IS_LANG_ENG, true)) {
+                txt.setText(categories.get(i).getEngCategoryName());
+            } else {
+                txt.setText(categories.get(i).getAmhCategoryName());
+            }
             txt.setPadding(30, 10, 30, 10);
             txt.setTextColor(Color.WHITE);
             txt.setOnClickListener(catClick);

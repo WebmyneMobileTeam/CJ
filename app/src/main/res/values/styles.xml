@@ -48,4 +48,13 @@
         <item name="DialogSpotColor">@color/colorPrimary</item>
         <item name="DialogSpotCount">4</item>
     </style>
+
+
+
+    <style name="tagStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/L_TEXT</item>
+        <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

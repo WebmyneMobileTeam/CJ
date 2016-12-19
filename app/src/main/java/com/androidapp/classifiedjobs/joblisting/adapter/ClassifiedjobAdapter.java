@@ -10,51 +10,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidapp.classifiedjobs.R;
-import com.androidapp.classifiedjobs.databinding.JobItemBinding;
 import com.androidapp.classifiedjobs.databinding.JobItemRevisedBinding;
 import com.androidapp.classifiedjobs.helper.Functions;
-import com.androidapp.classifiedjobs.joblisting.model.Job;
+import com.androidapp.classifiedjobs.joblisting.model.ClassifiedJob;
 import com.androidapp.classifiedjobs.joblisting.model.JobData;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 /**
- * Created by ishan on 12-12-2016.
+ * Created by ishan on 15-12-2016.
  */
 
-public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHolder> {
+public class ClassifiedJobAdapter extends RecyclerView.Adapter<ClassifiedJobAdapter.MyViewHolder> {
     private final Activity mActivity;
-    private List<Job> jobList;
+    private List<ClassifiedJob> classifiedJobDataList;
     private JobItemRevisedBinding dataBind;
 
-    public void setItems(List<Job> inputList) {
-        jobList = inputList;
+    public void setItems(List<ClassifiedJob> inputList){
+        classifiedJobDataList=inputList;
         notifyDataSetChanged();
     }
 
-    public JobListAdapter(Activity mActivity, List<Job> jobList) {
+    public ClassifiedJobAdapter(Activity mActivity, List<ClassifiedJob> classifiedJobDataList) {
         this.mActivity = mActivity;
-        this.jobList = jobList;
+        this.classifiedJobDataList = classifiedJobDataList;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ClassifiedJobAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         dataBind = DataBindingUtil.inflate(LayoutInflater.from(mActivity), R.layout.job_item_revised, parent, false);
         View itemView = dataBind.getRoot();
-        return new MyViewHolder(itemView);
+        return new ClassifiedJobAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-
+    public void onBindViewHolder(ClassifiedJobAdapter.MyViewHolder holder, int position) {
         holder.jobTitle.setTypeface(Functions.getTF(mActivity));
-
-        String jobTitle = jobList.get(position).JobTitle();
-        String imageUrl = jobList.get(position).ImageName();
-
+        String jobTitle = classifiedJobDataList.get(position).JobTitle();
+        String imageUrl = classifiedJobDataList.get(position).ImageName();
         if (jobTitle != null && !jobTitle.trim().equals(""))
-            holder.jobTitle.setText(jobTitle);
+            holder.jobTitle.setText(classifiedJobDataList.get(position).JobTitle());
         else
             holder.jobTitle.setVisibility(View.GONE);
         if (imageUrl != null && !imageUrl.trim().equals(""))
@@ -65,7 +61,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return jobList.size();
+        return classifiedJobDataList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

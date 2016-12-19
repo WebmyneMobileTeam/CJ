@@ -15,8 +15,13 @@ public class Constants {
     public static final String CATEGORY_URL = "Users.svc/json/AddUserCategory";
     public static final String UPDATE_USER_DATA_URL = "Users.svc/json/UpdateUserDetail";
 
+    public static final String JOB_LIST = "Job.svc/json/GeneralJobList";
+    public static final String CLASSIFIED_JOB_LIST = "Job.svc/json/ClassifiedJobList";
+
     public static final String USER_DATA = "user_data";
     public static final String IS_LOGIN = "is_login";
+    public static final String USER_OBJ = "user";
+    public static final String CATEGORY_SELECTED = "category_selected";
     //for lang selection
     public static String IS_LANG_ENG = "lang";
 }

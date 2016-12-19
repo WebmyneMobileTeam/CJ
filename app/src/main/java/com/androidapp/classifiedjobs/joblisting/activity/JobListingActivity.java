@@ -100,7 +100,6 @@ public class JobListingActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -114,6 +113,13 @@ public class JobListingActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if (id == R.id.action_category) {
+            if (Prefs.with(JobListingActivity.this).getBoolean(Constants.IS_LANG_ENG, true)) {
+                Prefs.with(JobListingActivity.this).save(Constants.IS_LANG_ENG, false);
+            } else {
+                Prefs.with(JobListingActivity.this).save(Constants.IS_LANG_ENG, true);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }

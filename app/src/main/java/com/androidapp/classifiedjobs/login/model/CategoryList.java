@@ -3,7 +3,7 @@ package com.androidapp.classifiedjobs.login.model;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.androidapp.classifiedjobs.CategoryListModel;
+import com.androidapp.classifiedjobs.CategoryModel;
 import com.androidapp.classifiedjobs.dbhelper.DatabaseManager;
 import com.google.auto.value.AutoValue;
 import com.squareup.sqldelight.RowMapper;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @AutoValue
-public abstract class CategoryList implements CategoryListModel {
+public abstract class CategoryList implements CategoryModel {
     public static final Factory<CategoryList> CATEGORY_LIST_FACTORY = new Factory<>(AutoValue_CategoryList::new);
 
     public static final RowMapper<CategoryList> ROW_MAPPER = CATEGORY_LIST_FACTORY.select_all_dataMapper();
@@ -28,7 +28,7 @@ public abstract class CategoryList implements CategoryListModel {
             sqLiteDatabase.insert(CategoryList.TABLE_NAME, null,
                     CategoryList.CATEGORY_LIST_FACTORY.marshal(rCategoryList).asContentValues());
             DatabaseManager.getInstance().closeDatabase();
-        }else {
+        } else {
             updateCategoryList(rCategoryList);
         }
     }
@@ -63,5 +63,17 @@ public abstract class CategoryList implements CategoryListModel {
         sqLiteDatabase.update(CategoryList.TABLE_NAME,
                 CategoryList.CATEGORY_LIST_FACTORY.marshal(rCategoryList).asContentValues(), CategoryList.CATEGORYID + " = ?", new String[]{String.valueOf(rCategoryList.CategoryID())});
         DatabaseManager.getInstance().closeDatabase();
+    }
+
+    public static boolean isSeletedAnyCategory() {
+        SQLiteDatabase sqLiteDatabase = DatabaseManager.getInstance().openDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(CategoryList.SELECT_DATA_BY_SELECTED, new String[]{"1"});
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                return true;
+            }
+        }
+        DatabaseManager.getInstance().closeDatabase();
+        return false;
     }
 }

@@ -13,14 +13,15 @@
             android:id="@+id/emptyImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_phone" />
+            android:src="@drawable/ic_no_data"/>
 
         <TextView
             android:id="@+id/emptyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/no_record"
+            android:textColor="@color/mediumGrey"
+            android:text="@string/no_record_en"
             android:textSize="@dimen/XXL_TEXT" />
 
     </LinearLayout>

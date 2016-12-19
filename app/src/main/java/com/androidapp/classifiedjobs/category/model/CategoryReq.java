@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CategoryReq {
     List<Long> CategoryID;
-    int UserID;
+    Long UserID;
 
     public List<Long> getCategoryID() {
         return CategoryID;
@@ -18,11 +18,11 @@ public class CategoryReq {
         CategoryID = categoryID;
     }
 
-    public int getUserID() {
+    public Long getUserID() {
         return UserID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Long userID) {
         UserID = userID;
     }
 }

@@ -1,0 +1,25 @@
+CREATE TABLE ClassifiedJob (
+	ClassifiedJobID	INTEGER,
+	Description	TEXT,
+	EndDate	TEXT,
+	ImageName	TEXT,
+	IsActive	INTEGER,
+	JobTitle	TEXT,
+	JobType	TEXT,
+	JobTypeID	INTEGER,
+	LanguageType	TEXT,
+	StartDate	TEXT,
+    isEng	INTEGER AS Boolean NOT NULL DEFAULT ((0))
+);
+
+select_all_data:
+SELECT * FROM ClassifiedJob;
+
+select_data_by_id:
+SELECT * FROM ClassifiedJob WHERE ClassifiedJobID = ?;
+
+select_data_by_lang:
+SELECT * FROM Job WHERE LanguageType = ?;
+
+delete_all_data:
+DELETE FROM ClassifiedJob;

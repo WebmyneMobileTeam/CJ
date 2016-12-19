@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_category_selection"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.androidapp.classifiedjobs.category.CategorySelectionActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:tint="#eeffffff"
+    <RelativeLayout
+        android:id="@+id/activity_category_selection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_people" />
+        android:layout_height="match_parent"
+        tools:context="com.androidapp.classifiedjobs.category.CategorySelectionActivity">
 
-    <TextView
-        android:id="@+id/txtChooseCategories"
-        android:textSize="18sp"
-        android:text="@string/choose_categories_en"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_people"
+            android:tint="#eeffffff" />
 
-    <com.androidapp.classifiedjobs.category.TagLayout
-        android:layout_margin="16dp"
-        android:id="@+id/flowlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        <TextView
+            android:id="@+id/txtChooseCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/choose_categories_en"
+            android:textSize="18sp" />
 
-    </com.androidapp.classifiedjobs.category.TagLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnNext"
+            android:layout_below="@+id/txtChooseCategories"
+            android:layout_centerInParent="true"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/btnNext"
-        android:textSize="22sp"
-        android:background="@android:color/transparent"
-        android:onClick="onclickNext"
-        android:layout_alignParentBottom="true"
-        android:text="@string/Next_En"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <com.androidapp.classifiedjobs.widget.EmptyLayout
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
-</RelativeLayout>
+            <com.androidapp.classifiedjobs.category.TagLayout
+                android:id="@+id/flowlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnNext"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:gravity="right|center"
+            android:onClick="onclickNext"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>

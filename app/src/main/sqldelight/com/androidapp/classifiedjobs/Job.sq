@@ -1,0 +1,34 @@
+CREATE TABLE Job (
+	CategoryID	INTEGER,
+	CategoryName	TEXT,
+	CompanyAddress	TEXT,
+	CompanyContactNo	TEXT,
+	CompanyName	TEXT,
+	CompanyURL	TEXT,
+	Description	TEXT,
+	EndDate	TEXT,
+	ImageName	TEXT,
+	IsActive	INTEGER AS Boolean NOT NULL DEFAULT ((0)),
+	JobID	INTEGER,
+	JobTitle	TEXT,
+	JobType	TEXT,
+	JobTypeID	INTEGER,
+	LanguageType	TEXT,
+	NoOfVacancy	INTEGER,
+	PostedByContactNo	TEXT,
+	PostedByName	TEXT,
+	StartDate	TEXT,
+    isEng	INTEGER AS Boolean NOT NULL DEFAULT ((0))
+);
+
+select_all_data:
+SELECT * FROM Job;
+
+select_data_by_id:
+SELECT * FROM Job WHERE JobID = ?;
+
+select_data_by_lang:
+SELECT * FROM Job WHERE LanguageType = ?;
+
+delete_all_data:
+DELETE FROM Job;

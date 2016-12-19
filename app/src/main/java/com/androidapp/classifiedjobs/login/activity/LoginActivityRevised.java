@@ -10,6 +10,7 @@ import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -130,7 +131,6 @@ public class LoginActivityRevised extends AppCompatActivity {
             dataBind.llSigninContent.enterPhoneET.setHint(getResources().getString(R.string.enter_your_phone_en));
             dataBind.llSigninContent.enterPasswordET.setHint(getResources().getString(R.string.enter_your_password_en));
 
-
             txtChooseLanguage.setText(R.string.choose_lang_en);
 
 
@@ -192,6 +192,37 @@ public class LoginActivityRevised extends AppCompatActivity {
                 if (validationLogin(view)) {
                     login();
                 }
+            }
+        });
+
+        dataBind.llSigninContent.password.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_ENTER) {
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 1500) {
+                        return false;
+                    }
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    if (validationLogin(view)) {
+                        login();
+                    }
+                }
+                return false;
+            }
+        });
+        dataBind.llSignupContent.inputPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_ENTER) {
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 1500) {
+                        return false;
+                    }
+                    mLastClickTime = SystemClock.elapsedRealtime();
+                    if (validationRegistration(view)) {
+                        registration();
+                    }
+                }
+                return false;
             }
         });
 
@@ -259,16 +290,28 @@ public class LoginActivityRevised extends AppCompatActivity {
     //this method for validate login field
     private boolean validationLogin(View view) {
         if (!Functions.isInternetConnected(LoginActivityRevised.this)) {
-            Functions.showSnack(view, getString(R.string.internet_error_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.internet_error_en));
+            else
+                Functions.showSnack(view, getString(R.string.internet_error_am));
             return false;
         } else if (dataBind.llSigninContent.phone.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_phone_no_am));
             return false;
         } else if (dataBind.llSigninContent.phone.getText().toString().trim().length() != 10) {
-            Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_valid_phone_am));
             return false;
         } else if (dataBind.llSigninContent.password.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_password_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_password_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_password_am));
             return false;
         }
 
@@ -278,25 +321,46 @@ public class LoginActivityRevised extends AppCompatActivity {
     //this method for validate registration field
     private boolean validationRegistration(View view) {
         if (!Functions.isInternetConnected(LoginActivityRevised.this)) {
-            Functions.showSnack(view, getString(R.string.internet_error_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.internet_error_en));
+            else
+                Functions.showSnack(view, getString(R.string.internet_error_am));
             return false;
         } else if (dataBind.llSignupContent.inputName.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_name_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_name_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_name_am));
             return false;
         } else if (dataBind.llSignupContent.inputEmail.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_email_id_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_email_id_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_email_id_am));
             return false;
         } else if (!dataBind.llSignupContent.inputEmail.getText().toString().trim().matches(emailPattern)) {
-            Functions.showSnack(view, getString(R.string.enter_valid_email_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_valid_email_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_valid_email_am));
             return false;
         } else if (dataBind.llSignupContent.inputPhone.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_phone_no_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_phone_no_am));
             return false;
         } else if (dataBind.llSignupContent.inputPhone.getText().toString().trim().length() != 10) {
-            Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_valid_phone_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_valid_phone_am));
             return false;
         } else if (dataBind.llSignupContent.inputPassword.getText().toString().trim().equals("")) {
-            Functions.showSnack(view, getString(R.string.enter_password_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                Functions.showSnack(view, getString(R.string.enter_password_en));
+            else
+                Functions.showSnack(view, getString(R.string.enter_password_am));
             return false;
         }
 
@@ -335,7 +399,10 @@ public class LoginActivityRevised extends AppCompatActivity {
     private void callApiForRegistration(RegistrationReq registrationReq) {
         if (dialog != null) {
             dialog.show();
-            dialog.setTitle(getString(R.string.authentication_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                dialog.setTitle(getString(R.string.authentication_en));
+            else
+                dialog.setTitle(getString(R.string.authentication_am));
         }
         Functions.logError(this, CJMyApplication.getGson().toJson(registrationReq).toString());
         AppApi appApi = CJMyApplication.getRetrofit().create(AppApi.class);
@@ -354,11 +421,9 @@ public class LoginActivityRevised extends AppCompatActivity {
                     UserData.insertUserData(response.body().getResponseData().getData().get(0).getUserDetail());
                     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(LoginActivityRevised.this, Constants.USER_DATA, MODE_PRIVATE);
                     RUserDetail userData = response.body().getResponseData().getData().get(0).getUserDetail();
-                    complexPreferences.putObject("user", userData);
+                    complexPreferences.putObject(Constants.USER_OBJ, userData);
                     complexPreferences.commit();
                     Prefs.with(LoginActivityRevised.this).save(Constants.IS_LOGIN, true);
-                    Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
-
                     if (response.body().getResponseData().getData().get(0).getCategoryList() != null &&
                             response.body().getResponseData().getData().get(0).getCategoryList().size() > 0) {
                         for (int i = 0; i < response.body().getResponseData().getData().get(0).getCategoryList().size(); i++) {
@@ -366,8 +431,13 @@ public class LoginActivityRevised extends AppCompatActivity {
                         }
                     }
 
+                    Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
+                    finish();
                 } else {
-                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                    if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                        Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                    else
+                        Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_am));
                 }
             }
 
@@ -376,8 +446,11 @@ public class LoginActivityRevised extends AppCompatActivity {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                Functions.logError(LoginActivityRevised.this,t.getMessage());
-                Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                Functions.logError(LoginActivityRevised.this, t.getMessage());
+                if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                else
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_am));
             }
         });
     }
@@ -396,7 +469,10 @@ public class LoginActivityRevised extends AppCompatActivity {
     private void callApiForLogin(LoginReq loginReq) {
         if (dialog != null) {
             dialog.show();
-            dialog.setTitle(getString(R.string.authentication_en));
+            if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                dialog.setTitle(getString(R.string.authentication_en));
+            else
+                dialog.setTitle(getString(R.string.authentication_am));
         }
         Functions.logError(this, CJMyApplication.getGson().toJson(loginReq).toString());
         AppApi appApi = CJMyApplication.getRetrofit().create(AppApi.class);
@@ -413,12 +489,20 @@ public class LoginActivityRevised extends AppCompatActivity {
                     UserData.insertUserData(response.body().getResponseData().getData().get(0));
                     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(LoginActivityRevised.this, Constants.USER_DATA, MODE_PRIVATE);
                     RUserDetail userData = response.body().getResponseData().getData().get(0);
-                    complexPreferences.putObject("user", userData);
+                    complexPreferences.putObject(Constants.USER_OBJ, userData);
                     complexPreferences.commit();
                     Prefs.with(LoginActivityRevised.this).save(Constants.IS_LOGIN, true);
-                    Functions.fireIntent(LoginActivityRevised.this, JobListingActivity.class, true);
+                    if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.CATEGORY_SELECTED, false)) {
+                        Functions.fireIntent(LoginActivityRevised.this, JobListingActivity.class, true);
+                    } else {
+                        Functions.fireIntent(LoginActivityRevised.this, CategorySelectionActivity.class, true);
+                    }
+                    finish();
                 } else {
-                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.try_to_register_en));
+                    if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                        Functions.showSnack(findViewById(android.R.id.content), getString(R.string.try_to_register_en));
+                    else
+                        Functions.showSnack(findViewById(android.R.id.content), getString(R.string.try_to_register_am));
                     showSignupForm();
                 }
             }
@@ -428,7 +512,10 @@ public class LoginActivityRevised extends AppCompatActivity {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
-                Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                if (Prefs.with(LoginActivityRevised.this).getBoolean(Constants.IS_LANG_ENG, true))
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_en));
+                else
+                    Functions.showSnack(findViewById(android.R.id.content), getString(R.string.wrong_response_am));
             }
         });
     }
